@@ -161,7 +161,6 @@ static NSError *YouTubeError(NSError *error, NSSet *regionsAllowed, NSString *la
 		NSData *postData = [string dataUsingEncoding:NSASCIIStringEncoding];
 
 		[request setHTTPBody:postData];
-
 		[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
 		[self startRequestWith:request type:XCDYouTubeRequestTypeGetVideoInfo];
@@ -280,6 +279,7 @@ static NSError *YouTubeError(NSError *error, NSSet *regionsAllowed, NSString *la
 	switch (requestType)
 	{
 		case XCDYouTubeRequestTypeGetVideoInfo:
+			XCDYouTubeLogWarning(@"Running response formatting");
 			[self handleVideoInfoResponseWithInfo:XCDDictionaryWithQueryString(responseString) response:response];
 			break;
 		case XCDYouTubeRequestTypeWatchPage:
@@ -318,6 +318,7 @@ static NSError *YouTubeError(NSError *error, NSSet *regionsAllowed, NSString *la
 - (void) handleVideoInfoResponseWithInfo:(NSDictionary *)info response:(NSURLResponse *)response
 {
 	XCDYouTubeLogDebug(@"Handling video info response");
+	XCDYouTubeLogWarning(@"Handling video info response");
 
 	NSError *error = nil;
 	XCDYouTubeVideo *video = [[XCDYouTubeVideo alloc] initWithIdentifier:self.videoIdentifier info:info playerScript:self.playerScript response:response error:&error];
